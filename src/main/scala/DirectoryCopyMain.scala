@@ -29,7 +29,7 @@ object DirectoryCopyMain {
   }*/
 
   /**
-    * java8 새로운 기능을 사용해서 폴더 복사(하위 폴더 포함)
+    * java7 새로운 기능을 사용해서 폴더 복사(하위 폴더 포함)
     * Directory Copy (sub directory)
     * @param source
     * @param targer
