@@ -1,4 +1,4 @@
-Directory 폴더 및 파일 복사
+# Directory 폴더 및 파일 복사
 
 java.nio.Files copy 메소드는 하위 경로에 디렉토리의 파일은 복사하지 않는다.
 
@@ -55,9 +55,9 @@ targer.resolve(source.relativize(src))) : source 패스에 대해 src 지정된 
 flatMap 처리
 
 def listAllFiles(file: File): Seq[File] = {
-if (file.isDirectory) {
-  (file +: file.listFiles(_.isDirectory).toSeq.flatMap(x => listAllFiles(x))) ++ file.listFiles(_.isFile)
-} else {
-  Seq(file)
-}
+  if (file.isDirectory) {
+    (file +: file.listFiles(_.isDirectory).toSeq.flatMap(x => listAllFiles(x))) ++ file.listFiles(_.isFile)
+  } else {
+    Seq(file)
+  }
 }
