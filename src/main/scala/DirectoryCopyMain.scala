@@ -65,7 +65,7 @@ object DirectoryCopyMain {
       case x +: xs =>
         getAll(
           xs ++ x.listFiles(_.isDirectory),
-          acc :+ DirAndFiles(Some(x), x.listFiles(_.isAbsolute).toSeq)
+          acc :+ DirAndFiles(Some(x), x.listFiles(_.isFile).toSeq)
         )
       case Seq() =>
         acc
@@ -77,6 +77,24 @@ object DirectoryCopyMain {
       Seq(DirAndFiles(None, Seq(file)))
 
   }
+
+  /**
+    * 파일 복사하기
+    * @param source
+    * @param targer
+    * @return
+    */
+  def copy(source: File, targer: File) = {
+    val allDirAndFiles = getAllDirsAndFiles(source)
+    for {
+      DirAndFiles(dir, files) <- allDirAndFiles
+      dirPath = dir.fold("")(_.getCanonicalPath.drop(source.getCanonicalPath.length + 1))
+      targetDir = new File(targer, dirPath)
+      _ = targetDir.mkdirs
+      file <- files
+      copiedFile = Files.copy(file.toPath, new File(targetDir, file.getName).toPath)
+    } yield copiedFile.toFile
+  }"finish"//
 
 
   def main(args: Array[String]): Unit = {
@@ -90,7 +108,10 @@ object DirectoryCopyMain {
 
     //directoryCopy(Paths.get(SOURCE_FILE_PATH), Paths.get(TARGER_FILE_PATH))
 
-    getAllDirsAndFiles(new File(SOURCE_FILE_PATH)).foreach(println)
+    //getAllDirsAndFiles(new File(SOURCE_FILE_PATH)).foreach(println)
+
+
+    copy(new File(SOURCE_FILE_PATH), new File(TARGER_FILE_PATH))
 
  }
 
