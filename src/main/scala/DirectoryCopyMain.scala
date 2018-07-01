@@ -94,7 +94,7 @@ object DirectoryCopyMain {
       file <- files
       copiedFile = Files.copy(file.toPath, new File(targetDir, file.getName).toPath)
     } yield copiedFile.toFile
-  }"finish"//
+  }
 
 
   def main(args: Array[String]): Unit = {
